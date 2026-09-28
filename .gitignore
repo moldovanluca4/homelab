@@ -1,0 +1,58 @@
+# Local editor and agent metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.agents/
+.codex/
+*.swp
+*~
+
+# Credentials and local environment files
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+*.pub
+credentials*
+secrets/
+private/
+
+# VPN profiles and private configuration exports
+*.ovpn
+*.p7b
+*.p7c
+*.p8
+*.p10
+configs/**/*.conf
+configs/**/*.cfg
+configs/**/*.uci
+
+# Logs, captured traffic, databases, and backups
+*.log
+*.pcap
+*.pcapng
+*.db
+*.sqlite*
+*.bak
+*.backup
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+backups/
+exports/
+dumps/
+
+# Generated local artifacts
+__pycache__/
+node_modules/
+.cache/
