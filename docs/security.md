@@ -6,7 +6,7 @@ I want to protect household data and limit unnecessary access between devices. R
 
 ## Currently configured
 
-OMV runs on the Raspberry Pi 5 with USB boot storage and an external data HDD. I configured it with security in mind and consulted setup/documentation resources. The actual access controls, update arrangements, and configuration checks are not documented yet.
+OMV runs on the Raspberry Pi 5 with USB boot storage and an external data HDD. I consulted setup/documentation resources, but the specific access controls, update arrangements, and checks are not documented yet.
 
 Pi-hole is in use for DNS-level filtering. Its client coverage and resolver settings are not documented yet. DNS filtering acts on names; clients using another DNS path may bypass it, and it does not inspect all traffic.
 
@@ -29,6 +29,6 @@ The boot device and data HDD are separate storage roles, not a documented backup
 
 ## DNS and privacy
 
-DNS logs can reveal device and family browsing activity. The [planned DNS experiment](../experiments/dns-resolution-path.md) uses a reserved example domain and a narrow test. Its optional denylist step includes restoring the previous state. The comparison should establish how particular queries behave, rather than imply that all devices follow the same path.
+DNS logs can reveal device and family browsing activity. The [planned DNS experiment](../experiments/dns-resolution-path.md) uses a reserved example domain and restores the previous filtering state after testing. Its results will apply to the tested client and resolver paths.
 
 For each change, record the starting state, expected behavior, observations, and rollback steps in the [experiment log](../notes/experiments.md).

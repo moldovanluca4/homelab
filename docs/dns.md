@@ -40,6 +40,6 @@ Cached answers and local records can skip stages; blocked queries stop earlier. 
 
 ## Next experiment — planned
 
-[From Pi-hole to the DNS Root: Where Does Local DNS Control End?](../experiments/dns-resolution-path.md) is the single planned DNS investigation. It compares the client's default resolver path, an explicit query to Pi-hole, an optional alternative resolver, and an iterative trace. An optional temporary denylist entry tests the local filtering boundary.
+[From Pi-hole to the DNS Root: Where Does Local DNS Control End?](../experiments/dns-resolution-path.md) is the next planned DNS experiment. It compares the client's default resolver path, an explicit query to Pi-hole, an optional alternative resolver, and an iterative trace. An optional temporary denylist entry tests the local filtering boundary.
 
-Results are **not run yet**. The plan includes prerequisites, expected observations, interpretation limits, and cleanup. DNSSEC authentication and encrypted DNS transport are separate topics for later study; their configuration in this lab is not documented yet.
+The experiment has **not been run yet**. DNSSEC authentication and encrypted DNS transport are separate topics for later study; their configuration in this lab is not documented yet.

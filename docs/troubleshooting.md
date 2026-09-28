@@ -26,7 +26,7 @@ I also began researching older kernels and kernel/hardware compatibility. A vers
 
 ## Why I started looking at kernels
 
-I want to understand which kernel components and modules this hardware actually needs, and how much could be removed or simplified on such a constrained machine. That is a direction for the next investigation; module or library removal has not been carried out in the recorded work.
+I want to understand which kernel components and modules this hardware actually needs, and how much could be removed or simplified on such a constrained machine. Component removal or simplification is future work.
 
 The graphical problem could involve several layers. The hardware, driver, kernel, display server, and desktop/session behavior need distinguishing before I can narrow down a cause.
 

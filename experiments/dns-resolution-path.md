@@ -6,21 +6,21 @@
 
 ## Objective
 
-When I block or resolve a domain through Pi-hole, where does my control stop and the wider DNS infrastructure begin? I want to compare queries through my normal resolver path, directly through Pi-hole, and along the DNS delegation hierarchy.
+When I block or resolve a domain through Pi-hole, where does my control stop and the wider DNS infrastructure begin? I want to compare my normal resolver path, a direct query to Pi-hole, and the DNS delegation hierarchy.
 
 ## Background
 
-Pi-hole applies local filtering and can forward allowed queries to an upstream resolver. Recursive resolvers obtain answers using caches and, when needed, referrals through root and TLD servers to authoritative servers. Local filtering and authoritative zone contents are different layers.
+Pi-hole applies local filtering and can forward allowed queries to an upstream resolver. Recursive resolvers use caches and, when needed, follow root and TLD referrals to authoritative servers. A local denylist changes filtering, not the authoritative zone.
 
-`dig +trace` performs iterative lookups from the client. It is not a packet trace of Pi-hole's upstream activity. An explicit server with trace affects the initial root-server lookup, rather than making that server carry out the whole trace. See the [BIND dig manual](https://bind9.readthedocs.io/en/latest/manpages.html#dig-dns-lookup-utility).
+`dig +trace` performs iterative lookups from the client, not through Pi-hole's upstream path. With trace, an explicit server affects only the initial root-server lookup. See the [BIND dig manual](https://bind9.readthedocs.io/en/latest/manpages.html#dig-dns-lookup-utility).
 
 ## Hypothesis
 
-If the test client's Pi-hole policy blocks `example.com`, an explicit query to Pi-hole should reflect that policy. A query to another reachable recursive resolver may still return an answer if the network permits that path. An iterative trace should expose delegation steps when direct DNS access is allowed. These are expectations to test.
+A direct query to Pi-hole should reflect a denylist rule applied to the test client. Another recursive resolver may still answer if the network allows that path. An iterative trace should show delegations when direct DNS access is available.
 
 ## Topology
 
-The client, Pi-hole host, upstream settings, and network policies must be recorded privately before the run. This is the proposed comparison, not an observed path:
+Paths to compare:
 
 ```mermaid
 flowchart TB
@@ -33,20 +33,18 @@ flowchart TB
     TLD --> Auth["Authoritative answer"]
 ```
 
-The trace branch summarizes referral order; the client sends the queries at each stage. The root and TLD servers return referrals rather than forwarding the query down this chain.
+The trace branch shows referral order. The client queries each level; root and TLD servers return referrals rather than forwarding the query.
 
 ## Prerequisites
 
-- Use a client and Pi-hole instance I administer, with a working baseline and a way to restore any rule changed.
-- Install or locate `dig`. `resolvectl` is useful only on a client using systemd-resolved; otherwise inspect that client's actual resolver configuration.
-- Record the test date, client OS, `dig` version, Pi-hole version, active client/group policy, and DNS configuration. Keep identifying values in private notes.
-- Privately identify Pi-hole's reachable address and, optionally, an approved comparison recursive resolver.
-- Use `example.com`, reserved for examples; check whether it is already blocked or allowlisted and whether any local test depends on it. See [IANA example domains](https://www.iana.org/help/example-domains).
-- Schedule the optional rule change so it does not interfere with anyone else's use. Prefer a rule scoped to the test client/group where supported.
+- A client and Pi-hole instance I administer, with `dig` available.
+- Private notes on the test date, client OS, tool versions, DNS settings, and Pi-hole client/group policy.
+- Pi-hole's address and, optionally, a comparison recursive resolver allowed by the existing network policy.
+- A baseline check of `example.com`, a [reserved example domain](https://www.iana.org/help/example-domains), including existing deny/allow rules and any local use that could be affected.
 
 ## Commands
 
-These commands are proposed steps. No output has been collected. Replace the quoted placeholders locally; they are not usable addresses.
+Replace the quoted address placeholders locally before running these steps.
 
 ### 1. Inspect the client's resolver setup
 
@@ -55,7 +53,7 @@ dig -v
 resolvectl status
 ```
 
-Run the second command only when systemd-resolved is in use; see the [resolvectl manual source](https://github.com/systemd/systemd/blob/main/man/resolvectl.xml). Its output can contain interface, domain, and resolver details. On another setup, inspect the network manager's DNS settings and `/etc/resolv.conf` locally instead. Record whether the configured resolver is a local stub and how its upstream is selected.
+Use `resolvectl status` only with systemd-resolved; see its [manual source](https://github.com/systemd/systemd/blob/main/man/resolvectl.xml). Otherwise inspect the network manager's DNS settings and `/etc/resolv.conf`. Note whether a local stub is involved and how its upstream is selected.
 
 ### 2. Establish baseline queries
 
@@ -65,16 +63,16 @@ dig example.com A +time=3 +tries=1
 dig @"$PIHOLE_PRIVATE_IP" example.com A +time=3 +tries=1
 ```
 
-Keep the full local output so the response status, flags, answer, TTL, responding server, and timing can be compared. `dig` with no explicit server uses its configured resolver path, which can differ from browser DNS-over-HTTPS or other application-specific resolution.
+Record the status, flags, answer, TTL, responding server, and timing. The default `dig` path can differ from browser DNS-over-HTTPS or other software's resolver settings.
 
-Optional comparison, only if the selected resolver is reachable under the network's existing policy:
+Optional comparison:
 
 ```sh
 COMPARISON_RESOLVER='<COMPARISON_RESOLVER_ADDRESS>'
 dig @"$COMPARISON_RESOLVER" example.com A +time=3 +tries=1
 ```
 
-Do not change firewall policy to force this comparison to work. Record a timeout or refusal as an observation.
+Record timeouts or refusals rather than change firewall rules to force access.
 
 ### 3. Follow delegation
 
@@ -82,29 +80,27 @@ Do not change firewall policy to force this comparison to work. Record a timeout
 dig +trace example.com A +time=3 +tries=1
 ```
 
-Record the referrals and final response, or the stage at which the trace fails. Direct DNS queries can be blocked or intercepted; failure does not alone establish a global DNS problem. Trace output can contain public server addresses, so publish a summary using roles rather than raw output.
+Record referrals and the final response, or where the trace fails. Local blocking or interception can affect this path. Summarize servers by role when publishing, since raw output includes addresses.
 
-### 4. Optional temporary local filter
+### 4. Optional temporary Pi-hole denylist test
 
-1. Record the existing exact-match deny/allow entries and test-client policy for `example.com`.
-2. If a new isolated test is possible, add a temporary exact-domain deny entry through the installed Pi-hole interface. Record its scope. Leave unrelated lists and existing entries unchanged.
-3. Repeat the two baseline queries and the optional comparison query with the same type and options.
-4. If the result differs from the hypothesis, inspect the exact test query's policy decision locally, including group membership, allow rules, filtering state, and cache effects. Avoid collecting unrelated query history.
-5. Remove only the temporary entry created for this experiment, restore any test-only group changes, and repeat the baseline queries.
-
-A pre-existing rule should be left in its original state. If it prevents a clean temporary-rule test, skip that step and record the limitation.
+1. Record the existing exact-match deny/allow rules and client/group settings for `example.com`.
+2. Add a temporary exact-domain deny entry through Pi-hole's interface, preferably scoped to the test client/group. Leave existing entries unchanged; skip this step if they prevent a clean test or other users would be affected.
+3. Repeat the baseline and optional comparison queries with the same options.
+4. If behavior is unexpected, inspect the test query's policy decision, group membership, allow rules, filtering state, and cache effects locally.
+5. Follow the cleanup steps below and repeat the baseline queries.
 
 ## Expected observations
 
 | Comparison | Expected or possible observation |
 | --- | --- |
-| Default versus explicit Pi-hole query | They may agree, or differ if the client's configured path is different. |
-| Pi-hole with the temporary deny entry | A blocking response appropriate to its configured mode, rather than one assumed error code. |
-| Comparison recursive resolver | May answer independently of the local rule, or be unreachable/subject to another policy. |
-| Iterative trace | Referrals toward an authoritative answer, or a specific failure stage. |
-| Query after cleanup | Baseline behavior should return; investigate remaining cache or policy differences if it does not. |
+| Default versus explicit Pi-hole query | Answers may differ if the client uses another resolver path. |
+| Pi-hole with the temporary deny entry | A response matching its configured blocking mode. |
+| Comparison recursive resolver | An answer independent of the local rule, or a connection/policy failure. |
+| Iterative trace | Referrals toward an authoritative answer, or a failure at a particular stage. |
+| After cleanup | Return to baseline behavior. |
 
-Pi-hole supports different [blocking modes](https://docs.pi-hole.net/ftldns/blockingmode/), so do not assume every block is NXDOMAIN. Cache state, TTLs, resolver policy, and answer variation can affect comparisons. Query timing alone is not a benchmark.
+Pi-hole's [blocking mode](https://docs.pi-hole.net/ftldns/blockingmode/) determines the response; a block is not always NXDOMAIN. Caches, TTLs, and resolver policies can affect answers and timings. This is a resolution-path test, not a benchmark.
 
 ## Results
 
@@ -112,9 +108,9 @@ Not run yet.
 
 ## Interpretation before execution
 
-A local denylist changes how selected clients receive answers through Pi-hole; it does not edit an authoritative zone or the global delegation system. A successful alternative lookup would show an available path for that client at that time, not establish every device's behavior. A failed alternative lookup requires investigation of the local path before assigning a cause.
+An alternative lookup could show a path around local filtering for the tested client. It would not change the authoritative data or establish how every device resolves names.
 
-The trace illustrates delegation. It does not identify Pi-hole's actual upstream behavior, reproduce its cache state, or by itself prove DNSSEC validation. The institutional coordination behind DNS also needs separate sources.
+The trace shows delegation, not Pi-hole's upstream activity or cache state, and does not by itself prove DNSSEC validation. Understanding who coordinates the infrastructure also requires sources beyond the command output.
 
 ## Questions raised
 
@@ -126,6 +122,6 @@ The trace illustrates delegation. It does not identify Pi-hole's actual upstream
 
 ## Rollback / cleanup
 
-Restore the original denylist and test-client/group state, preserving any pre-existing rules. Repeat the baseline queries. If behavior has not recovered, investigate applicable cache TTLs and remaining policy differences before making further changes. Avoid restarting shared services or clearing network-wide caches just for this test.
+Remove only the deny entry added for this test and restore any test-only group changes. Preserve pre-existing rules, then repeat the baseline queries. If behavior differs, check cache TTLs and remaining policy differences; avoid restarting shared services or clearing network-wide caches for this test.
 
-Unset the temporary shell variables when finished. Review excerpts against the [publishing checklist](../docs/publishing-checklist.md); retain raw resolver settings and query output privately.
+Unset the temporary shell variables. Keep raw settings and query output private, and check excerpts against the [publishing checklist](../docs/publishing-checklist.md).

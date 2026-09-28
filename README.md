@@ -47,7 +47,7 @@ The [architecture notes](docs/architecture.md) explain storage and service depen
 ## Current investigations
 
 - **Fujitsu laptop:** an old Ubuntu release is installed, but a graphical problem remains. I am investigating older kernels and hardware compatibility. [Case study](docs/troubleshooting.md)
-- **Pi-hole and DNS:** I use DNS filtering and want to follow where local control ends. The [DNS resolution experiment](experiments/dns-resolution-path.md) is planned and has not been run.
+- **Pi-hole and DNS:** I want to understand where local DNS control ends. The [DNS resolution experiment](experiments/dns-resolution-path.md) is planned and has not been run.
 - **Networking and security:** I am exploring OpenWrt, firewall rules, and IoT isolation. Specific rules and outcomes are not documented yet. [Networking notes](docs/networking.md)
 
 The [experiment index](notes/experiments.md) also links the Arch/Void exploration.
@@ -64,7 +64,7 @@ The [roadmap](docs/roadmap.md) separates the next work from later ideas.
 
 ## What I am learning
 
-The Fujitsu has less than 1 GB of RAM. Working with it made me notice how much I take modern memory and CPU resources for granted, and made resource-conscious software and kernel behavior more interesting to me.
+Working with the Fujitsu made me notice how much I take modern memory and CPU resources for granted. It got me thinking more about resource-conscious software and kernel behavior.
 
 On the Pi, I am learning by operating storage and thinking through its access and recovery needs. Pi-hole has led me toward [global DNS and Internet infrastructure](docs/internet-infrastructure.md). The planned Rust tool is a way to bring my interests in systems programming and administration into one project.
 

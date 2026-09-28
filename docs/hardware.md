@@ -10,7 +10,7 @@ I started with the Pi to see what it could do. Local storage for documents, phot
 
 ## Fujitsu legacy laptop
 
-This laptop has been in my family for approximately 10–15 years and has less than 1 GB RAM. **CPU model not yet verified; believed to be Pentium 4-class.** The family ownership period is approximate and does not establish its manufacture date.
+This laptop has been in my family for approximately 10–15 years and has less than 1 GB RAM. **CPU model not yet verified; believed to be Pentium 4-class.**
 
 An old Ubuntu release is installed, with an unresolved GUI problem. I am investigating older kernels and hardware compatibility in the [Fujitsu case study](troubleshooting.md).
 

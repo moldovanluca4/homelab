@@ -6,11 +6,11 @@
 
 OMV runs on my Raspberry Pi 5 with 8 GB RAM. The operating system boots from USB storage, and an external HDD holds data. My aim is a local personal-cloud environment for documents, photographs, and files used around the house.
 
-I configured OMV with security in mind and consulted setup/documentation resources. Specific controls and observations belong in the [security notes](security.md).
+Running storage for personal files makes access control and recovery important to me. The [security notes](security.md) track that work.
 
 ### Still to document
 
-OMV and underlying OS versions; HDD capacity, filesystem, shares, access permissions, encryption, redundancy, and backup/restore arrangements. These are not documented yet.
+OMV and underlying OS versions; HDD capacity, filesystem, shares, access permissions, encryption, redundancy, and backup/restore arrangements.
 
 ## Pi-hole — active
 
