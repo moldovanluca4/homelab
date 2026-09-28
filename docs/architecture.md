@@ -1,55 +1,44 @@
 # Architecture
 
-[Home](../README.md) · [Current diagram](../diagrams/current-architecture.md) · [Planned diagram](../diagrams/planned-architecture.md)
+[Home](../README.md) · [Current diagram](../diagrams/current-architecture.md) · [Planned network](../diagrams/planned-architecture.md)
 
-## Goals
+## Main system
 
-I want to keep private data locally, run useful services, and understand how the machines supporting them interact. Raspberry Pi hardware and old laptops give me a starting point for that work.
+OpenMediaVault runs on a **Raspberry Pi 5 with 8 GB RAM**. The Pi boots its operating system from a USB storage device and uses an external HDD for data. The system distribution/version and the detailed disk layout are not documented yet.
 
-## Current components
-
-Raspberry Pi hardware, Linux, OMV/local storage, and Pi-hole/DNS filtering are **CURRENTLY IMPLEMENTED**. Old-laptop compatibility, OpenWrt, firewall rules, and IoT isolation are **EXPERIMENTAL**.
-
-```mermaid
-flowchart LR
-    Devices["Home devices: inventory TBD"] --- Network["Home LAN: topology TBD"]
-    Network --- NAS["OMV / local storage"]
-    Network --- DNS["Pi-hole / DNS filtering"]
-    Network --- Hardware["Raspberry Pi and old-laptop experiments"]
-```
-
-This component overview leaves physical placement open. Whether OMV and Pi-hole share a host, the device count, router platform, links, addressing, and storage layout still need documenting.
-
-## Planned architecture — PLANNED
-
-I want to separate personally managed devices from IoT, guest, and experimental devices, then define which services each group needs to reach.
+Pi-hole provides DNS-level filtering. Its host placement remains open in the component map. The Fujitsu and Arch/Void laptops are separate Linux investigations.
 
 ```mermaid
 flowchart TB
-    Edge["Edge router / OpenWrt candidate: PLANNED design"]
-    Edge -.-> Trusted["Trusted network: PLANNED"]
-    Edge -.-> IoT["IoT network: PLANNED"]
-    Edge -.-> Guest["Guest network: PLANNED"]
-    Edge -.-> Lab["Experimental network: PLANNED"]
-    Trusted -.-> NAS["Existing OMV: future placement TBD"]
-    Edge -.-> DNS["Existing Pi-hole: future placement and access TBD"]
+    Internet["Internet"] --- Router["Home router"]
+    Router --- LAN["Home LAN"]
+    LAN --- Pi["Raspberry Pi 5 / 8 GB RAM"]
+    Pi --- OMV["OpenMediaVault"]
+    Pi --- USB["USB device / operating-system boot storage"]
+    Pi --- HDD["External HDD / data storage"]
+    LAN -.-> DNS["Pi-hole / host placement not documented"]
+    LAN -.-> Fujitsu["Fujitsu / ongoing legacy Linux investigation"]
+    LAN -.-> Distro["Arch and Void experiment laptop"]
 ```
 
-Dotted links show proposed relationships. Hardware support, service placement, and access rules remain to be worked out. The logical groups could share physical equipment.
+The diagram describes components and their roles. It leaves physical links and the laptops' current network connectivity unspecified. Pi-hole may share hardware with another service; its box identifies the service rather than an additional machine.
 
 ## Dependencies
 
-| Component | Depends on | Details to add |
+| Component | Known relationship | Operational question |
 | --- | --- | --- |
-| OMV/NAS | Host, disks, power, network, permissions | Host, layout, filesystem, and sharing protocol |
-| Pi-hole | Host, client DNS settings, upstream resolution | Host, upstream, and client coverage |
-| Home clients | Connectivity, addressing, DNS, routing | DHCP provider and router role |
-| Future automation | Credentials, recoverable state, service dependencies | Tasks and tools; PLANNED |
+| OMV | Runs on the Pi 5 | How are access permissions, updates, and recovery handled? |
+| USB boot device | Holds the Pi's operating system | How would I recover from a boot-device failure? |
+| External HDD | Holds data used by the storage setup | What backup and restore arrangements exist? |
+| Pi-hole | Provides DNS filtering | Which host, clients, and upstream resolver are involved? |
+| Home clients | Use local connectivity, addressing, and DNS | Where are DHCP and DNS settings supplied? |
 
-A host failure can affect several services if they share that host. I need to record placement and observed failure behavior before deciding whether redundancy would help.
+The boot device and data HDD have separate roles. That arrangement by itself is not a backup or a redundancy scheme. Backup configuration, filesystem, sharing protocol, encryption, and permissions are not documented yet.
 
-## Boundaries to document
+## Network boundaries
 
-The Internet edge and the boundaries between local devices have different roles. Current inbound exposure, device groups, and access policies are TBD.
+I am exploring OpenWrt, firewall rules, and IoT isolation. The router platform, current access policies, and inbound exposure are not documented yet.
 
-For the segmentation experiments, I want to record who can reach storage, administer infrastructure, and use DNS. Each experiment should include expected allowed and denied traffic, observations, and a way to undo the change. Device trust depends on how it is managed and what access it needs; the network name alone does not enforce that policy.
+The [planned network](../diagrams/planned-architecture.md) separates trusted, IoT, guest, and experimental devices. VLAN support, interface assignments, and permitted traffic need investigation before implementing that design. Logical groups may share physical equipment.
+
+For each boundary, I want to record which clients can query DNS, reach storage, and administer infrastructure, followed by allowed/denied traffic checks and rollback steps. Service placement and host failures also matter: services sharing a host can become unavailable together.

@@ -1,73 +1,72 @@
 # Personal Home Lab
 
-**Active / evolving**
+I am a Computer Science student running a small home lab around a Raspberry Pi 5 and repurposed computers. I use it for local storage, DNS filtering, and Linux experiments. These notes are for myself, other home-lab enthusiasts, and students starting with equipment they already have.
 
-I am a Computer Science student building a home lab with Raspberry Pi hardware, old laptops, and other repurposed equipment. I use it to learn Linux, networking, storage, DNS, and self-hosting. These notes are for my own reference and for other students and home-lab enthusiasts working with similar equipment.
+## Why I built it
 
-## How it started
+I started with a Raspberry Pi because I wanted to understand what such a small computer could do. Discovering that services I normally used through external providers could run locally led me toward a personal-cloud environment for documents, photographs, and files used around the house.
 
-I started with a Raspberry Pi because I wanted to see what such a small computer could do. After discovering that I could host services locally, I wanted to use it for more than isolated experiments. Keeping private data and photos locally became one of the reasons to build out the lab.
+That grew into working with networking, DNS, and security. I want the home infrastructure to be useful, eventually smarter, and safer for family members who do not have a technical cybersecurity background. Operating it myself gives me a reason to understand how its parts work.
 
-From there, I started working with Linux, NAS storage, and DNS filtering. I also want to make the home network safer for family members who do not have a technical cybersecurity background. Firewall rules and IoT isolation are areas I am exploring toward that goal.
+> Almost any piece of hardware capable of doing useful computation or interfacing with another system deserves to be investigated before being discarded.
 
-> Almost any piece of hardware capable of running software can be given a new purpose.
+I have also disassembled another old computer and kept usable components for possible future projects.
 
-That is why repurposed hardware is part of this project. I want to see what I can do with equipment I already have.
+## Current setup
 
-## What is in the lab
-
-| Component | Purpose | Status |
+| Component | Role | Status |
 | --- | --- | --- |
-| Raspberry Pi | Self-hosting and Linux | CURRENTLY IMPLEMENTED; model and service placement TBD |
-| Linux | Operating systems and administration | CURRENTLY IMPLEMENTED; distributions and versions TBD |
-| OpenMediaVault (OMV) | NAS / local storage | CURRENTLY IMPLEMENTED |
-| Pi-hole | DNS-level filtering | CURRENTLY IMPLEMENTED |
-| Old laptop(s) | Linux and kernel compatibility work | EXPERIMENTAL; hardware and final state TBD |
-| Firewall rules and IoT isolation | Device access and network boundaries | EXPERIMENTAL; scope TBD |
-| OpenWrt | Network and firewall exploration | EXPERIMENTAL; hardware, role, and features tried TBD |
-| Arduino | Future IoT projects | PLANNED; model and availability TBD |
+| Raspberry Pi 5, 8 GB RAM | OpenMediaVault / NAS | Active |
+| External HDD | Data storage for the Pi | Active |
+| USB boot device | Operating-system storage for the Pi running OMV | Active |
+| Pi-hole | DNS-level filtering; host placement not documented yet | Active |
+| Fujitsu legacy laptop, less than 1 GB RAM | Older Ubuntu and kernel/hardware compatibility | Ongoing experiment; GUI issue unresolved |
+| Arch/Void laptop | Linux distribution experimentation | Experimental |
 
-**CURRENTLY IMPLEMENTED** means in use, **EXPERIMENTAL** means an area of investigation or testing, and **PLANNED** means future work. **TBD** marks a detail I still need to add. Deployment status and the completeness of these notes are tracked separately.
+Here, **Active** means in use, **Experimental/Ongoing** means investigation or testing, and **Planned** means future work.
 
-I use **OMV** for the storage side of the lab and **Pi-hole** for DNS filtering. The [service inventory](docs/services.md) lists the configuration details I still need to document, including storage layout, backups, the DNS upstream, and client coverage.
+## Current architecture
 
-## Component overview
-
-This conceptual map groups the lab's hardware and services. Service placement, physical links, and current network boundaries are TBD.
+This is a conceptual component map. Connections show roles and relationships rather than cabling; dotted links leave device connectivity or service placement open.
 
 ```mermaid
 flowchart TB
-    Internet["Internet"] --- Edge["Home router / edge: details TBD"]
-    Edge --- LAN["Home LAN: boundaries TBD"]
-    LAN --- Hardware["Raspberry Pi and old laptops: roles TBD"]
-    LAN --- Storage["OMV / NAS: CURRENTLY IMPLEMENTED"]
-    LAN --- DNS["Pi-hole / DNS filtering: CURRENTLY IMPLEMENTED"]
-    LAN -.-> Lab["OpenWrt, firewall and IoT isolation: EXPERIMENTAL"]
+    Internet["Internet"] --- Router["Home router"]
+    Router --- LAN["Home LAN"]
+    LAN --- Pi["Raspberry Pi 5 / 8 GB RAM"]
+    Pi --- OMV["OpenMediaVault"]
+    Pi --- USB["USB device / operating-system boot storage"]
+    Pi --- HDD["External HDD / data storage"]
+    LAN -.-> DNS["Pi-hole / host placement not documented"]
+    LAN -.-> Fujitsu["Fujitsu / ongoing legacy Linux investigation"]
+    LAN -.-> Distro["Arch and Void experiment laptop"]
 ```
 
-The [architecture notes](docs/architecture.md) cover dependencies. A separate [planned diagram](diagrams/planned-architecture.md) shows the trusted, IoT, guest, and experimental networks I would like to explore.
+The [architecture notes](docs/architecture.md) explain storage and service dependencies. OpenWrt is an area of exploration; its role as the home router is not established.
 
-## Working with an old laptop
+## Current investigations
 
-One old laptop had trouble running even Linux distributions intended for older hardware. I started researching older Linux/Ubuntu kernel versions and experimenting with compatibility instead of setting the machine aside.
+- **Fujitsu laptop:** an old Ubuntu release is installed, but a graphical problem remains. I am investigating older kernels and hardware compatibility. [Case study](docs/troubleshooting.md)
+- **Pi-hole and DNS:** I use DNS filtering and want to follow where local control ends. The [DNS resolution experiment](experiments/dns-resolution-path.md) is planned and has not been run.
+- **Networking and security:** I am exploring OpenWrt, firewall rules, and IoT isolation. Specific rules and outcomes are not documented yet. [Networking notes](docs/networking.md)
 
-I still need to add the exact symptoms, versions, attempts, and final state to the [troubleshooting record](docs/troubleshooting.md).
+The [experiment index](notes/experiments.md) also links the Arch/Void exploration.
 
-## Next steps
+## Planned projects
 
-- [ ] Fill in the hardware inventory and service-to-device mapping.
-- [ ] Document the firewall and IoT-isolation experiments, including which OpenWrt features I have tried.
-- [ ] Record the storage and backup setup, then plan a restoration test.
-- [ ] Document which clients use Pi-hole and how they receive DNS settings.
-- [ ] Recover the details of the laptop/kernel investigation.
+- [homelab-status](projects/homelab-status.md): a Rust terminal tool for viewing information from several machines.
+- Further OpenWrt work, network segmentation, and stronger isolation.
+- Arduino/microcontroller experiments using retained components where feasible.
+- Jetson Nano and local/private AI experiments, possibly a local voice assistant.
+- Investigating reuse of an old DVD-player display.
 
-VLANs, VPN access, monitoring, automated backups, additional services, and Arduino experiments are on the [longer-term roadmap](docs/roadmap.md). I also want to explore automation and how services on multiple machines depend on one another.
+The [roadmap](docs/roadmap.md) separates the next work from later ideas.
 
-## DNS beyond the home network
+## What I am learning
 
-Working with Pi-hole led me to questions about recursive resolvers, authoritative servers, root servers, and top-level domains. I can configure DNS inside my network, but those lookups depend on a much larger system outside it.
+The Fujitsu has less than 1 GB of RAM. Working with it made me notice how much I take modern memory and CPU resources for granted, and made resource-conscious software and kernel behavior more interesting to me.
 
-My [Internet infrastructure notes](docs/internet-infrastructure.md) collect the topics I want to study, including how Internet identifiers are coordinated and where ICANN fits into that work.
+On the Pi, I am learning by operating storage and thinking through its access and recovery needs. Pi-hole has led me toward [global DNS and Internet infrastructure](docs/internet-infrastructure.md). The planned Rust tool is a way to bring my interests in systems programming and administration into one project.
 
 ## Documentation
 
@@ -75,13 +74,13 @@ My [Internet infrastructure notes](docs/internet-infrastructure.md) collect the 
 | --- | --- |
 | Equipment and services | [Hardware](docs/hardware.md) · [Inventory](hardware/inventory.md) · [Services](docs/services.md) |
 | Design | [Architecture](docs/architecture.md) · [Diagrams](diagrams/README.md) |
-| Networking | [Networking](docs/networking.md) · [DNS](docs/dns.md) · [Security](docs/security.md) |
-| Notes | [Troubleshooting](docs/troubleshooting.md) · [Experiments](notes/experiments.md) · [Lessons learned](notes/lessons-learned.md) |
-| Learning and future work | [Learning](docs/learning.md) · [Internet infrastructure](docs/internet-infrastructure.md) · [Roadmap](docs/roadmap.md) |
+| Operations | [Networking](docs/networking.md) · [DNS](docs/dns.md) · [Security](docs/security.md) |
+| Investigations | [Fujitsu](docs/troubleshooting.md) · [Arch/Void](docs/distribution-experiments.md) · [Experiment index](notes/experiments.md) |
+| Learning | [Learning notes](docs/learning.md) · [Lessons learned](notes/lessons-learned.md) |
 | Repository upkeep | [Configuration notes](configs/README.md) · [Publishing checklist](docs/publishing-checklist.md) |
 
 ## Public documentation
 
-Public diagrams and any configuration examples are sanitized for security; credentials and identifying network details stay private.
+Public diagrams and configuration examples are sanitized for security; credentials and identifying network details stay private.
 
-Corrections and suggestions are welcome through [CONTRIBUTING.md](CONTRIBUTING.md). Repository content is available under the [MIT License](LICENSE).
+Corrections and suggestions are welcome through [CONTRIBUTING.md](CONTRIBUTING.md). Content is available under the [MIT License](LICENSE).

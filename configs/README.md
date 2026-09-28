@@ -1,13 +1,13 @@
 # Configuration notes
 
-[Home](../README.md) · [Service inventory](../docs/services.md)
+[Home](../README.md) · [Services](../docs/services.md)
 
-These directories currently contain notes on examples I want to add:
+The service directories currently hold notes for future examples:
 
-- [Pi-hole](pihole/README.md): client DNS settings, filtering, local records, and upstream resolution.
-- [OpenWrt](openwrt/README.md): firewall zones, VLANs, DNS/DHCP, and IoT isolation.
-- [OMV](omv/README.md): storage roles, permissions, backups, and restoration.
+- [OMV](omv/README.md): the Pi's storage roles and later access/recovery examples.
+- [Pi-hole](pihole/README.md): resolver settings and the planned DNS experiment.
+- [OpenWrt](openwrt/README.md): network roles and boundary tests.
 
-For each example, I want to include the software version, assumptions, status, intended behavior, observations, and recovery steps. The [experiment template](../notes/experiments.md) provides a starting point.
+Future examples should include version, assumptions, intended behavior, observations, and rollback steps. Use the [experiment template](../notes/experiments.md) for an actual run.
 
-A subnet label such as `192.168.X.0/24` is an illustrative placeholder and cannot be used as a literal configuration value.
+`192.168.X.0/24` is an illustrative subnet placeholder, not a literal configuration value.

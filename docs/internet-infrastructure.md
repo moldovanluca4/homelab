@@ -1,30 +1,21 @@
-# From local DNS to Internet infrastructure
+# Where local DNS control ends
 
-[Home](../README.md) · [DNS notes](dns.md)
+[Home](../README.md) · [DNS notes](dns.md) · [Planned experiment](../experiments/dns-resolution-path.md)
 
-Working with Pi-hole made me want to understand what happens beyond my local DNS settings. Inside the home network, I can choose local services, firewall rules, and access policies. Outside it, my devices rely on systems run by other people and organizations.
+I can control how names are resolved and filtered inside my home network, but who coordinates the system once the request depends on infrastructure outside my network?
 
-## DNS and identifiers
+Using Pi-hole made that question concrete. I can choose a local filtering rule. For a permitted lookup, the answer may depend on a recursive resolver and servers operated elsewhere.
 
-DNS has a distributed hierarchy. Recursive resolvers obtain answers, root servers help locate top-level-domain servers, and delegations lead to authoritative servers for particular zones. Caching reduces repeated lookups. The [DNS sequence diagram](dns.md) shows that process; [Cloudflare's explanation](https://www.cloudflare.com/learning/dns/what-is-dns/) provides more background.
+## Following a lookup
 
-Domain names and IP addresses have different roles, and both rely on coordination to remain useful globally. I want to understand how a name lookup fits into that wider system of Internet identifiers.
+Recursive resolvers obtain answers for clients. Root DNS, top-level domains, and delegations lead toward authoritative servers for a zone. Caches can shorten that process. The [DNS sequence diagram](dns.md) shows the roles.
 
-## Standards and resilience
+The planned experiment compares local filtering with resolution through another path and an iterative trace. I want to distinguish a local policy decision from the information published by an authoritative server.
 
-The Internet joins independently operated networks and software implementations. Shared protocols let those systems communicate.
+## Coordination and resilience
 
-I want to study how DNS authentication, operational diversity, and recovery practices affect resilience, and how failures can spread through dependencies. These are future reading and experiment topics.
+Domain names and IP addresses serve different purposes, but both depend on coordinated identifier systems. Shared protocols allow independently operated networks and software to communicate. I want to understand how DNS authentication, operational diversity, recovery, and dependencies affect resilience.
 
-## Coordination and ICANN
+ICANN coordinates parts of the Internet's unique identifier systems, particularly DNS-related functions, within a wider ecosystem of operators, standards communities, registries, registrars, governments, and users. It does not control the Internet or its content. See [ICANN's explanation of its role](https://www.icann.org/resources/pages/what-2012-02-25-en).
 
-ICANN coordinates parts of the Internet's unique identifier systems, particularly DNS-related functions. It works within a wider ecosystem of operators, standards communities, registries, registrars, governments, and users. ICANN does not control the Internet or its content. See [ICANN's explanation of its role](https://www.icann.org/resources/pages/what-2012-02-25-en).
-
-Questions I want to follow up on:
-
-- How are changes to shared naming infrastructure coordinated?
-- How do technical requirements influence governance decisions?
-- Whose operational needs are considered when those decisions are made?
-- How do independently operated systems preserve interoperability?
-
-These questions grew out of using DNS at home. I want to keep studying them alongside Linux, networking, systems programming, and distributed systems.
+The practical question from my lab leads to questions about how delegations are maintained, how changes are coordinated, and how technical requirements and governance decisions interact. The experiment can show lookup behavior; understanding institutional responsibilities also requires reading beyond its output.

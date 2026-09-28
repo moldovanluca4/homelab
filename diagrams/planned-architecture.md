@@ -1,22 +1,20 @@
 # Planned segmented network
 
-[Home](../README.md) · [Architecture notes](../docs/architecture.md) · [Current components](current-architecture.md)
+[Home](../README.md) · [Architecture](../docs/architecture.md) · [Current components](current-architecture.md)
 
-**PLANNED.** I want to explore separate trusted, IoT, guest, and experimental networks. OpenWrt is a candidate for the edge role. OMV and Pi-hole are already in use; their placement in this design is TBD.
+**Status: Planned.** I want to explore trusted, IoT, guest, and experimental networks. OpenWrt is a candidate for the edge role. OMV already runs on the Pi 5; its future segment is a design choice. Pi-hole's host placement remains undocumented.
 
 ```mermaid
 flowchart TB
-    Internet["Internet"] -.-> Edge["Router / OpenWrt candidate: PLANNED role"]
-    Edge -.-> Trusted["Trusted network: PLANNED"]
-    Edge -.-> IoT["Isolated IoT network: PLANNED"]
-    Edge -.-> Guest["Guest network: PLANNED"]
-    Edge -.-> Lab["Experimental network: PLANNED"]
-    Trusted -.-> Laptop["Managed laptop: proposed placement"]
-    Trusted -.-> NAS["Existing OMV / NAS: placement TBD"]
-    IoT -.-> Devices["IoT devices: inventory TBD"]
-    Edge -.-> DNS["Existing Pi-hole: placement and policy TBD"]
+    Internet["Internet"] -.-> Edge["Router / OpenWrt candidate"]
+    Edge -.-> Trusted["Trusted network / planned"]
+    Edge -.-> IoT["IoT network / planned"]
+    Edge -.-> Guest["Guest network / planned"]
+    Edge -.-> Lab["Experimental network / planned"]
+    Trusted -.-> NAS["Pi 5 with OMV / proposed segment"]
+    Edge -.-> DNS["Pi-hole / host and segment undecided"]
 ```
 
-Dotted links show proposed relationships. Hardware VLAN support, interfaces, firewall zones, and access policies need working out. In particular, I need to decide which groups can query DNS, reach storage, and administer infrastructure.
+All links are proposed relationships. Hardware VLAN support, interfaces, firewall zones, and access rules need working out. The design must specify which groups can query DNS, reach storage, and administer infrastructure.
 
-VPN access, monitoring, and backup improvements are also on the [roadmap](../docs/roadmap.md).
+VPN access, monitoring, and backup improvements remain on the [roadmap](../docs/roadmap.md).

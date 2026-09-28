@@ -2,32 +2,33 @@
 
 [Home](../README.md) · [Networking](networking.md)
 
-I want to protect private data and reduce unnecessary access between devices, including those used by my family. Pi-hole is in use; firewall rules and IoT isolation are experimental. Stronger segmentation, monitoring, VPN access, and backup automation are planned.
+I want to protect household data and limit unnecessary access between devices. Running the storage myself means deciding how to manage access, updates, and recovery.
 
-## Access control and storage
+## Currently configured
 
-My goal is to give devices and accounts the access they need for their role. For OMV, I still need to document share permissions, administrative access, software maintenance, encryption, and recovery arrangements.
+OMV runs on the Raspberry Pi 5 with USB boot storage and an external data HDD. I configured it with security in mind and consulted setup/documentation resources. The actual access controls, update arrangements, and configuration checks are not documented yet.
 
-Personally managed devices also need access limits. Trust should reflect a device's purpose and management rather than give it unrestricted administrative permissions.
+Pi-hole is in use for DNS-level filtering. Its client coverage and resolver settings are not documented yet. DNS filtering acts on names; clients using another DNS path may bypass it, and it does not inspect all traffic.
 
-## Network boundaries
+## Currently being investigated
 
-I am exploring firewall rules and IoT isolation. The current rules, boundaries, and observed allowed/denied traffic are TBD. Router input and traffic forwarded between networks need separate attention.
+OpenWrt, firewall rules, network security, and IoT isolation are active areas of exploration. Specific rules and observed outcomes are not documented yet.
 
-I want local administration and storage to be reachable only where needed. Port forwarding, remote administration, and current inbound exposure still need checking and documenting.
+For the NAS, I want to record which accounts can access shares and administration, and how permissions match those roles. For the network, I want to establish what is externally reachable and distinguish router input from traffic forwarded between devices. Least privilege applies to managed devices as well as IoT devices.
 
-## DNS filtering
+## Planned work
 
-Pi-hole provides name-based filtering. Client coverage and alternative DNS paths need checking. The [DNS notes](dns.md) explain how queries can be answered locally, blocked, or forwarded upstream.
+- Document software versions and update/maintenance arrangements.
+- Record current port forwarding and remote administration before changing exposure.
+- Test a network boundary against expected allowed and denied traffic.
+- Document existing backups and perform a restoration test with disposable test data.
+- Define the access scope for a future VPN.
+- Choose useful monitoring data, retention, and alerts.
 
-## Backups — improvements PLANNED
+The boot device and data HDD are separate storage roles, not a documented backup strategy. Backup copies, retention, redundancy, encryption, and restoration results are not documented yet. Backup automation remains planned.
 
-A NAS or redundant disks alone do not provide a separate recoverable backup. I need to document existing copies, access, retention, and restoration results. Automated backups are planned; current manual arrangements are TBD.
+## DNS and privacy
 
-## VPN and monitoring — PLANNED
+DNS logs can reveal device and family browsing activity. The [planned DNS experiment](../experiments/dns-resolution-path.md) uses a reserved example domain and a narrow test. Its optional denylist step includes restoring the previous state. The comparison should establish how particular queries behave, rather than imply that all devices follow the same path.
 
-For remote access, I want to define which services a VPN client should reach before choosing a configuration. For monitoring, I need to decide what to collect, how long to keep it, and which events need attention. DNS and network logs can expose family browsing and device activity, so collection should be limited to the operational questions being investigated.
-
-## Recording changes
-
-For each security experiment, I want to record the starting configuration, expected behavior, actual observations, and rollback steps. Those notes will help me revisit rules as devices and services change.
+For each change, record the starting state, expected behavior, observations, and rollback steps in the [experiment log](../notes/experiments.md).

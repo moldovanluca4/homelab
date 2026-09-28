@@ -2,34 +2,26 @@
 
 [Home](../README.md) · [Architecture](architecture.md) · [Configuration notes](../configs/README.md)
 
-## In use — CURRENTLY IMPLEMENTED
+## OpenMediaVault — active
 
-| Service | Purpose | Details to add |
-| --- | --- | --- |
-| OpenMediaVault / NAS | Local storage | Host, version, disks, filesystem, capacity, shares, permissions, redundancy, encryption, backups |
-| Pi-hole | DNS-level filtering | Host, version, upstream, client coverage, local records, DHCP integration |
+OMV runs on my Raspberry Pi 5 with 8 GB RAM. The operating system boots from USB storage, and an external HDD holds data. My aim is a local personal-cloud environment for documents, photographs, and files used around the house.
 
-I use OMV for the storage side of the project. Keeping private data and photos locally was one of the reasons I started self-hosting. The storage layout and recovery arrangements still need documenting.
+I configured OMV with security in mind and consulted setup/documentation resources. Specific controls and observations belong in the [security notes](security.md).
 
-Pi-hole is my DNS-filtering service. I need to record which clients use it and how their DNS settings are supplied. The [DNS notes](dns.md) cover resolution and filtering behavior.
+### Still to document
 
-## Experiments — EXPERIMENTAL
+OMV and underlying OS versions; HDD capacity, filesystem, shares, access permissions, encryption, redundancy, and backup/restore arrangements. These are not documented yet.
 
-| Area | Purpose | Details to add |
-| --- | --- | --- |
-| Firewall rules | Explore device access policies | Platform, rules tried, and observations |
-| IoT isolation | Explore separation of less trusted devices | Boundary mechanism and permitted traffic |
-| OpenWrt | Explore networking and security configuration | Hardware, version, role, and features tried |
+## Pi-hole — active
 
-## Future services — PLANNED
+I use Pi-hole for DNS-level filtering. Host placement, version, upstream resolver, DHCP integration, local records, logging settings, and client coverage are not documented yet.
 
-| Area | Next decisions |
-| --- | --- |
-| VPN remote access | Protocol, endpoint, and access scope |
-| Network/security monitoring | Tooling, retention, and alerts |
-| Automated backups | Copy locations, retention, and restore procedure; existing manual arrangements TBD |
-| Additional self-hosted/distributed services | Service selection, placement, and dependencies |
-| Automation | Tasks worth automating and recovery steps |
-| Arduino / smart-home integration | Hardware and project scope |
+The next planned test is [From Pi-hole to the DNS Root](../experiments/dns-resolution-path.md), which compares resolution paths and a temporary local filtering rule.
 
-When a service changes, I will update this inventory and link the relevant [experiment notes](../notes/experiments.md). Installation, access checks, and restoration tests should have their own recorded outcomes.
+## Networking — experimental
+
+I am exploring OpenWrt, firewall rules, network security, and IoT isolation. The specific configuration changes and outcomes are not documented yet. See [networking](networking.md).
+
+## Future services — planned
+
+VPN remote access, network/security monitoring, automated backups, further self-hosted services, and services spread across multiple machines are on the [roadmap](roadmap.md). The [homelab-status design](../projects/homelab-status.md) describes a planned Rust tool for querying selected machine information.

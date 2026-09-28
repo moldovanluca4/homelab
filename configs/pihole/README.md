@@ -1,12 +1,7 @@
 # Pi-hole configuration notes
 
-[Configuration notes](../README.md) · [DNS notes](../../docs/dns.md)
+[Configuration notes](../README.md) · [DNS](../../docs/dns.md)
 
-Pi-hole is **CURRENTLY IMPLEMENTED** for DNS-level filtering. Version, upstream resolver, client coverage, local records, and DHCP integration still need documenting.
+Pi-hole is active for DNS-level filtering. Its host, version, upstream, local records, DHCP integration, and client coverage are not documented yet.
 
-## Examples to add — PLANNED
-
-- How clients receive DNS settings.
-- Filtering and allow-list decisions, with their expected effects and tradeoffs.
-- Local records and upstream-resolution choices.
-- A query/cache experiment with observations.
+The next example will come from the planned [DNS resolution-path experiment](../../experiments/dns-resolution-path.md). Record settings relevant to the test and the exact scope of any temporary denylist change, then link the observations here.

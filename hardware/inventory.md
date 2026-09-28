@@ -2,13 +2,17 @@
 
 [Home](../README.md) · [Hardware notes](../docs/hardware.md)
 
-Models, quantities, and service placement still need filling in. For now, I have grouped the equipment by type.
+| Device | Known hardware / storage | Role or software | Status |
+| --- | --- | --- | --- |
+| Raspberry Pi 5 | 8 GB RAM | OpenMediaVault / NAS | Active |
+| USB storage device | Model and capacity not documented yet | Pi operating-system boot storage | Active |
+| External HDD | Model, capacity, and filesystem not documented yet | Pi data storage | Active |
+| Fujitsu laptop | Less than 1 GB RAM; CPU model not yet verified, believed to be Pentium 4-class | Old Ubuntu release; version/kernel unknown, GUI problem unresolved | Ongoing investigation |
+| Arch/Void laptop | Model/specifications not documented yet | Arch installed/configured, followed by Void experimentation | Experimental |
+| Components from a disassembled old computer | Component inventory not documented yet | Retained for possible reuse | Retained; reuse planned |
 
-| Device | Role | Operating System | Status | Details to add |
-| --- | --- | --- | --- | --- |
-| Raspberry Pi | Linux and self-hosting | TBD | CURRENTLY IMPLEMENTED | Model, count, specifications, and services |
-| Old laptop(s) | Linux/server and kernel compatibility work | Linux/Ubuntu kernel experiments; distribution/version TBD | EXPERIMENTAL | Models, count, specifications, and final usable state |
-| Arduino | Future IoT experiments | TBD | PLANNED | Model, availability, and project |
-| Old DVD player/display | Possible screen reuse | TBD | PLANNED | Model, availability, interface, and feasibility |
+The Fujitsu has been in my family for approximately 10–15 years. Pi-hole's host and OpenWrt hardware are not documented yet.
 
-Other repurposed equipment can be added as I record its details. The NAS host, Pi-hole host, and OpenWrt hardware are TBD.
+## Planned hardware ideas
+
+Arduino/microcontrollers, an old DVD-player display, and Jetson Nano experiments are future work. Specific component interfaces, availability, and compatibility remain to be established.

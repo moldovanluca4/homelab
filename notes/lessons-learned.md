@@ -2,20 +2,22 @@
 
 [Home](../README.md) · [Learning notes](../docs/learning.md) · [Experiments](experiments.md)
 
-## Starting with one machine
+## Small hardware led to useful services
 
-I began with a Raspberry Pi to see what it could do. Discovering locally hosted services led me toward NAS storage, Linux administration, and DNS filtering.
+I started with a Raspberry Pi to understand what it could do. Discovering self-hosted services led me toward my own local storage setup. The Pi 5 now runs OMV with separate USB boot storage and an external data HDD.
 
-## Lightweight Linux and compatibility
+## Modern resources are easy to take for granted
 
-Distributions intended for older hardware still had problems on one of my laptops. I researched older Linux/Ubuntu kernels and experimented with compatibility. The versions and results still need adding to the [troubleshooting record](../docs/troubleshooting.md).
+The Fujitsu's less than 1 GB RAM changed how I think about software resource use. An old Ubuntu release is installed, but the GUI issue remains. I want to understand the hardware support and required components before trying to simplify the system.
 
-## Keeping track of attempts
+## Some history needs recovering
 
-The laptop notes have gaps around symptoms, versions, and results. For future experiments, I want to record those details alongside each change so I can compare attempts later.
+I do not remember why I first chose Void after working with Arch. The exact Ubuntu/kernel versions and sequence of Fujitsu attempts are also missing. For future experiments, I want to record the reason for a change alongside what happened.
 
-## Running local services
+## Keeping components creates another investigation
 
-Wanting to keep private data and photos locally brought storage permissions and recovery into the project. Those arrangements still need documenting. Using Pi-hole also led me to questions about how devices obtain DNS answers and how the global DNS hierarchy works.
+I kept usable parts from a disassembled old computer. Reusing them with a microcontroller will first require identifying their interfaces and electrical requirements.
 
-For future entries, I will link the experiment and explain what changed my understanding, including approaches I stopped pursuing.
+## Local services raise wider questions
+
+Operating storage brings permissions and recovery into the project. Pi-hole raises a different question: which parts of a lookup can I control locally, and who coordinates the systems beyond my network? That is the focus of the [planned DNS experiment](../experiments/dns-resolution-path.md).

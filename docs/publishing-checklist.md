@@ -2,31 +2,22 @@
 
 [Home](../README.md) · [Contributing](../CONTRIBUTING.md)
 
-## Details to fill in
+## Still to document
 
-| Area | Missing details |
-| --- | --- |
-| Raspberry Pi | Model, count, specifications, operating system |
-| Old laptops | Models, count, specifications, operating systems, final usable state |
-| Services | OMV and Pi-hole hosts and versions; other services in use |
-| Network | Current topology, router platform, DHCP/DNS roles |
-| OpenWrt | Hardware, version, role, and features tried |
-| Firewall and IoT isolation | Rules, boundary mechanism, and observed traffic |
-| VPN | Planned; protocol and access scope TBD |
-| Storage | Disks, layout, filesystem, capacity, shares, permissions, redundancy, encryption |
-| Backups | Current copies, retention, and restoration results; automation planned |
-| Pi-hole | Upstream resolver, local records, client coverage, logging, DHCP integration |
-| Laptop investigation | Dates, sources, symptoms, versions, attempts, and outcome |
-| Author attribution | Whether to keep “Home Lab contributors” in the MIT license |
+- **Pi/OMV:** OMV and underlying OS versions, HDD size/filesystem, shares, permissions, redundancy, encryption, backups, and restoration results.
+- **Pi-hole/network:** host placement, version, resolver and DHCP settings, logging, client coverage, router platform, and OpenWrt/isolation changes tried.
+- **Fujitsu:** exact model/CPU/graphics hardware, installed Ubuntu/kernel, GUI symptoms, earlier attempts, sources, and dates.
+- **Arch/Void:** laptop hardware, present installation state, configuration tasks, and dates.
+- **Hardware reuse:** retained components and their electrical/interface requirements.
 
 ## Review checklist
 
-- [ ] Check service status against what is currently running.
-- [ ] Update the README, inventory, roadmap, and diagrams together.
-- [ ] Preview Markdown/Mermaid and check relative links.
-- [ ] Review files, the diff, and history for credentials, keys, certificates, real hostnames, addresses, MAC addresses, and identifying topology.
-- [ ] Check images and excerpts for personal activity, query history, share paths, serial numbers, and other identifying details.
-- [ ] Keep raw exports, captures, logs, data listings, and backups out of the publication.
-- [ ] Review license attribution.
+- [ ] Check service status against what is running; keep future work labeled planned.
+- [ ] Update the inventory and diagrams when hardware or placement changes.
+- [ ] Preview Markdown/Mermaid and check links.
+- [ ] Review files, diffs, and history for passwords, tokens, API/SSH/VPN keys, certificates, real hostnames, addresses, MAC addresses, and unnecessary topology.
+- [ ] Check images/excerpts for Wi-Fi names, credentials, serial numbers, personal filenames, query history, and family activity.
+- [ ] Keep raw exports, captures, logs, storage listings, and backups private.
+- [ ] Review author attribution in the MIT license.
 
-[Ignore rules](../.gitignore) exclude common local artifacts, but already tracked files remain tracked and ignored files can be force-added. Check the actual files as well as any secret-scan results.
+[Ignore rules](../.gitignore) cover common local artifacts, but already tracked files remain tracked and ignored files can be force-added. Check the actual files as well as any secret-scan results.

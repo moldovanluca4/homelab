@@ -1,50 +1,29 @@
 # Roadmap
 
-[Home](../README.md) · [Service inventory](services.md) · [Experiment log](../notes/experiments.md)
+[Home](../README.md) · [Experiment index](../notes/experiments.md)
 
-## In use — CURRENTLY IMPLEMENTED
+## Next work — planned
 
-- [x] Raspberry Pi hardware and Linux.
-- [x] OMV for NAS/local storage.
-- [x] Pi-hole for DNS filtering.
+1. **Document the Pi/OMV setup:** record versions, disk layout, access controls, and current backup arrangements around the known USB boot device and external HDD.
+2. **Run the [DNS resolution experiment](../experiments/dns-resolution-path.md):** compare the default resolver, Pi-hole, and an iterative lookup; record results before drawing conclusions.
+3. **Continue the [Fujitsu investigation](troubleshooting.md):** identify the installed Ubuntu/kernel and hardware, then describe and investigate the GUI issue.
+4. **Document Pi-hole placement and settings:** host, upstream, DHCP integration, logging, and client coverage.
+5. **Clarify OpenWrt and isolation work:** record what has been tried, the network roles, and one boundary to test.
+6. **Start the [homelab-status MVP](../projects/homelab-status.md):** one host, read-only collection, and clear error states before expanding the interface.
 
-Old-laptop compatibility, firewall rules, IoT isolation, and OpenWrt are **EXPERIMENTAL**. I still need to record their exact scope and outcomes.
+These are next steps for active services and experiments. The [service inventory](services.md) records what is already in use.
 
-All unchecked items below are **PLANNED**, including the next steps for existing experiments.
+## After that — planned
 
-## Short term
+Network segmentation and VLANs, stronger firewall policies, VPN remote access, monitoring, backup restoration and automation, and repeatable administration tasks. Hardware support and test results will determine the order.
 
-- [ ] Fill in the hardware inventory and service-to-device mapping.
-- [ ] Record current network roles, firewall rules, and IoT-isolation scope.
-- [ ] List the OpenWrt features tried and their outcomes.
-- [ ] Document storage, existing backups, and a restoration-test plan.
-- [ ] Record Pi-hole client coverage and upstream behavior.
-- [ ] Fill in the laptop/kernel investigation, including unresolved failures.
+## Later / ideas — planned
 
-## Medium term
+- Arduino/microcontroller projects using retained components where electrically suitable.
+- Jetson Nano and local/private AI experiments.
+- A possible locally hosted voice assistant and other smart-home ideas.
+- Investigating an old DVD-player display's interface and reuse feasibility.
+- Additional self-hosted and distributed services, with dependency and failure observations.
+- More hardware reuse and further study of Internet identifiers, standards, and resilience.
 
-- [ ] Continue OpenWrt experiments with observations and rollback notes.
-- [ ] Explore VLANs and dedicated trusted, IoT, guest, and experimental networks.
-- [ ] Develop firewall policies around required traffic.
-- [ ] Explore VPN remote access with a defined access scope.
-- [ ] Add network/security monitoring and decide on log retention.
-- [ ] Improve backups, test restoration, and explore backup automation.
-- [ ] Experiment with local DNS, recursion, caching, and DNS security.
-- [ ] Explore traffic control and assess whether it helps with a specific need.
-
-## Long term
-
-- [ ] Automate repeated administration tasks with recovery steps.
-- [ ] Add self-hosted services and document their dependencies.
-- [ ] Distribute services across machines and observe failure behavior.
-- [ ] Study Internet identifiers, standards, coordination, and resilience.
-- [ ] Revisit access policies as devices and services change.
-
-## Creative ideas — PLANNED
-
-- [ ] Explore Arduino integration and smart-home projects.
-- [ ] Repurpose more legacy hardware.
-- [ ] Investigate reusing an old DVD player's screen; feasibility TBD.
-- [ ] Keep notes on abandoned approaches and unexpected results.
-
-When I begin an investigation, its status becomes EXPERIMENTAL. When a service goes into use, its status becomes CURRENTLY IMPLEMENTED. I will link dated observations separately and update the service inventory and diagrams alongside the change.
+Keep failed attempts and abandoned approaches alongside successful ones in the experiment notes.

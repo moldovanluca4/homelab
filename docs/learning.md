@@ -2,44 +2,37 @@
 
 [Home](../README.md) · [Lessons learned](../notes/lessons-learned.md)
 
-I started by exploring what a Raspberry Pi could do, then moved into self-hosting, NAS storage, and DNS filtering. The old laptop led me into Linux/Ubuntu kernel compatibility. These are the starting points for the notes in this repository.
+## Operating the Pi
 
-## Topics I want to connect
+The Pi began as a small-computer experiment and now runs OMV. I want local storage for documents, photographs, and household files. That makes filesystem layout, access control, software updates, and recovery practical questions for the machine I operate.
 
-| Area | Question |
-| --- | --- |
-| Linux and systems programming | How do hardware support, operating-system behavior, and services interact? |
-| Networking | How do DHCP, DNS, routing, and firewall rules affect access to a service? |
-| Storage | How do permissions, filesystem behavior, and backups affect access and recovery? |
-| Self-hosting and administration | What needs maintaining after a service is installed? |
-| IoT and security | Which devices need to communicate, and how can that access be checked? |
-| Automation — PLANNED | Which repeated tasks would benefit from a script and a recovery procedure? |
-| Distributed services — PLANNED | What happens when services on different machines depend on each other? |
+## Working with limited resources
 
-I want to use the lab to connect these topics with what I study in Computer Science. For troubleshooting notes, I will record the symptom, assumptions, software versions, changes, and observations. Differences between a guide's setup and my hardware belong in those notes too.
+The Fujitsu has less than 1 GB RAM. Installing an old Ubuntu release left a GUI issue to investigate, and working with those limits made me think more about memory use, kernel components, and the assumptions software makes about hardware. The [case study](troubleshooting.md) records the current state.
 
-## Start small
+## Trying different Linux systems
 
-My starting point was a Raspberry Pi. An old laptop is another possible starting point for someone with unused equipment.
+I installed/configured Arch and later began experimenting with Void on another laptop. The [distribution notes](distribution-experiments.md) separate that history from what I want to compare next.
 
-This is a suggested progression for students; choose a step that answers a question you have:
+## Connecting machines and services
+
+Pi-hole led me to ask where local DNS filtering ends and global resolution begins. The [planned DNS experiment](../experiments/dns-resolution-path.md) gives that question a testable scope.
+
+The planned [Rust status tool](../projects/homelab-status.md) connects systems programming, Linux administration, networking, and automation: collect useful information from several machines, handle partial failures, and display what is known without hiding errors.
+
+## Starting small
+
+For students starting with spare hardware, this is one possible progression. Choose a useful local task and expand as new questions arise.
 
 ```mermaid
 flowchart TB
-    A["Old laptop or available hardware"] --> B["Linux"]
-    B --> C["SSH"]
-    C --> D["Simple local service"]
-    D --> E["Storage / NAS"]
-    E --> F["DNS filtering"]
-    F --> G["Firewall"]
-    G --> H["Monitoring"]
-    H --> I["Network segmentation"]
-    I --> J["Automation"]
-    J --> K["Multiple machines / distributed services"]
+    A["Available hardware"] --> B["Linux and SSH"]
+    B --> C["Simple local service"]
+    C --> D["Storage / NAS"]
+    D --> E["DNS filtering"]
+    E --> F["Firewall and monitoring"]
+    F --> G["Segmentation and automation"]
+    G --> H["Services across machines"]
 ```
 
-## Troubleshooting questions
-
-When a service is unreachable, I want to distinguish a stopped service from a DNS problem, missing route, or access rule. For a storage problem, the next questions might concern permissions or filesystem state. For services spread across machines, I want to understand which dependencies fail together.
-
-The [experiment template](../notes/experiments.md) has space for the hypothesis, result, problems, and next attempt.
+For troubleshooting, separate a stopped service from a naming, routing, or permission problem. Record assumptions, versions, changes, and observations, including where a guide's setup differs from the hardware in front of you.

@@ -1,24 +1,18 @@
-# DNS
+# DNS and Pi-hole
 
 [Home](../README.md) · [Internet infrastructure](internet-infrastructure.md)
 
-## Pi-hole in the lab — CURRENTLY IMPLEMENTED
+I use Pi-hole for DNS-level filtering. Host placement, version, upstream resolver, DHCP integration, local records, logging settings, and client coverage are not documented yet.
 
-I use Pi-hole for DNS-level filtering as part of my work on the home network. It also led me to look beyond local settings and ask how DNS resolution works globally.
+## Resolution and filtering
 
-Version, upstream resolver, client coverage, query-log settings, DHCP integration, and local records still need documenting. Exploring local DNS, recursive resolution, and DNS security is **PLANNED**; a separate recursive resolver and DNSSEC setup remain TBD.
+Pi-hole can block selected names. For allowed queries that cannot be answered locally or from cache, it can forward to a configured upstream resolver. Clients using another DNS path may bypass the local filter. See [Pi-hole's upstream documentation](https://docs.pi-hole.net/guides/dns/upstream-dns-providers/) and its [recursive-resolver explanation](https://docs.pi-hole.net/guides/unbound/).
 
-## Filtering and resolution
-
-Pi-hole can block selected names. Clients that use another DNS path may bypass that filtering, and DNS filtering does not inspect all traffic.
-
-For allowed queries that cannot be answered locally or from cache, Pi-hole can forward to a configured upstream resolver. See [Pi-hole's upstream documentation](https://docs.pi-hole.net/guides/dns/upstream-dns-providers/) and its [recursive-resolver explanation](https://docs.pi-hole.net/guides/unbound/).
-
-Local records provide names for local services. A recursive resolver obtains answers for a client, while authoritative servers publish answers for their zones. Root and top-level-domain servers provide delegations that help the resolver find the relevant authoritative servers.
+Local DNS records name local services. A recursive resolver obtains answers for a client; authoritative servers publish answers for their zones. Root and TLD servers provide delegations that lead the resolver toward the relevant authoritative servers.
 
 ## Simplified lookup
 
-This sequence shows an allowed, uncached query, followed by an application connection.
+This sequence illustrates an allowed lookup with cache misses. It is a reference for the planned experiment.
 
 ```mermaid
 sequenceDiagram
@@ -39,18 +33,13 @@ sequenceDiagram
     A-->>R: DNS answer
     R-->>P: DNS answer
     P-->>C: DNS answer
-    C->>D: Separate application connection
+    C->>D: Separate connection to destination
 ```
 
-The resolver queries each level and follows referrals. Cached answers and local records can skip stages; blocked queries stop earlier. Aliases, retries, and validation are omitted here. The application connection runs between the client and destination, separately from DNS resolution. See [Cloudflare's DNS explanation](https://www.cloudflare.com/learning/dns/what-is-dns/).
+Cached answers and local records can skip stages; blocked queries stop earlier. The resolver follows referrals by querying each level. Aliases, retries, and validation are omitted here. The connection to the destination is separate from DNS resolution. See [Cloudflare's DNS explanation](https://www.cloudflare.com/learning/dns/what-is-dns/).
 
-## Experiments to try — PLANNED
+## Next experiment — planned
 
-- Check which clients query Pi-hole and how they receive DNS settings.
-- Compare allowed, blocked, cached, and uncached lookups.
-- Investigate a filtering decision that affects a service.
-- Explore local service naming and recursive resolution.
-- Compare what DNSSEC authenticates with what encrypted DNS transport protects.
-- Observe how clients behave when DNS is unavailable.
+[From Pi-hole to the DNS Root: Where Does Local DNS Control End?](../experiments/dns-resolution-path.md) is the single planned DNS investigation. It compares the client's default resolver path, an explicit query to Pi-hole, an optional alternative resolver, and an iterative trace. An optional temporary denylist entry tests the local filtering boundary.
 
-I still need to collect observations for these questions.
+Results are **not run yet**. The plan includes prerequisites, expected observations, interpretation limits, and cleanup. DNSSEC authentication and encrypted DNS transport are separate topics for later study; their configuration in this lab is not documented yet.

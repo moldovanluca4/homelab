@@ -2,11 +2,8 @@
 
 [Configuration notes](../README.md) · [Services](../../docs/services.md)
 
-OMV/NAS is **CURRENTLY IMPLEMENTED**. Host, version, disk layout, filesystem, capacity, sharing protocols, permissions, and backups still need documenting.
+OMV runs on the Raspberry Pi 5 with 8 GB RAM. The Pi boots its operating system from a USB device and uses an external HDD for data.
 
-## Examples to add — PLANNED
+The OMV/OS versions and detailed storage, share, access, and backup configuration are not documented yet. The [service page](../../docs/services.md) collects those gaps.
 
-- Storage roles and disk layout.
-- Share permissions and least-privilege access.
-- Dependencies and maintenance steps.
-- Backup design and restoration observations.
+Future examples will cover share permissions, maintenance, backup design, and restoration observations as that work is recorded.

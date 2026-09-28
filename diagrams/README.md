@@ -2,15 +2,17 @@
 
 [Home](../README.md)
 
-The diagrams use Mermaid blocks for rendering in GitHub Markdown.
+The diagrams use Mermaid blocks for GitHub Markdown.
 
 | Diagram | Purpose |
 | --- | --- |
-| [Current components](current-architecture.md) | Hardware and services, with placement and boundaries TBD |
-| [Planned network](planned-architecture.md) | Proposed trusted, IoT, guest, and experimental networks |
-| [DNS lookup](../docs/dns.md) | Simplified uncached resolution followed by an application connection |
-| [Learning progression](../docs/learning.md) | A suggested path for students starting a lab |
+| [Current architecture](current-architecture.md) | Pi 5, OMV, boot/data storage, and the other lab components |
+| [Planned network](planned-architecture.md) | Future trusted, IoT, guest, and experimental groups |
+| [DNS lookup](../docs/dns.md) | Simplified uncached resolution |
+| [DNS experiment](../experiments/dns-resolution-path.md) | Paths to compare when the planned test is run |
+| [Rust status tool](../projects/homelab-status.md) | Proposed collection and display flow |
+| [Learning progression](../docs/learning.md) | One possible path for students starting a lab |
 
-In component maps, solid lines show conceptual relationships. Dotted lines mark experimental or proposed relationships, as labeled. DNS sequence arrows show message direction. Access rules belong in the networking notes or an experiment record.
+Component maps show roles rather than cabling. Dotted links are explained in each diagram: they leave placement/connectivity open in the current map and represent proposals in the planned network. Sequence arrows show message direction.
 
-When placement or status changes, update the diagram and its explanation together.
+Update the relevant diagram when a component moves or an experiment becomes a deployed service.
